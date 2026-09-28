@@ -1,0 +1,125 @@
+
+.base-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.base-card__header h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+.base-card__header p {
+  margin: 0;
+}
+
+.base-card__body p {
+  margin: 0;
+}
+
+.base-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.7rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1rem;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.base-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.base-button--primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
+.base-button--secondary {
+  background: var(--panel-alt);
+  border-color: var(--border);
+}
+
+.base-button--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.base-button--danger {
+  background: var(--danger);
+}
+
+.base-button__spinner,
+.loading-state__spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem;
+  color: var(--muted);
+}
+
+.error-state {
+  padding: 1rem;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 0.75rem;
+  background: rgba(248, 113, 113, 0.08);
+  color: var(--danger);
+}
+
+.error-state p {
+  margin: 0.35rem 0 0.75rem;
+  color: var(--muted);
+}
+
+.error-state__retry {
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.metric-card__value {
+  margin: 0.2rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.metric-card__trend {
+  color: var(--muted);
+}
+
+.metric-card__trend--success {
+  color: var(--success);
+}
+
+.metric-card__trend--warning {
+  color: var(--warning);
+}
+
+.metric-card__trend--danger {
+  color: var(--danger);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
