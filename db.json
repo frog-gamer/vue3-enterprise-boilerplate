@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Alicia Thompson",
+      "email": "alicia@company.com",
+      "role": "Admin",
+      "status": "Active"
+    },
+    {
+      "id": "2",
+      "name": "Ben Carter",
+      "email": "ben@company.com",
+      "role": "Manager",
+      "status": "Pending"
+    },
+    {
+      "id": "3",
+      "name": "Chloe Lee",
+      "email": "chloe@company.com",
+      "role": "Developer",
+      "status": "Active"
+    },
+    {
+      "id": "4",
+      "name": "Daniel Ross",
+      "email": "daniel@company.com",
+      "role": "QA",
+      "status": "Inactive"
+    }
+  ]
+}

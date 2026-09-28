@@ -1,31 +1,34 @@
-# Enterprise Vue 3 Boilerplate
+# Auth, CRUD, dan Mock API
 
-Vue 3 + TypeScript + Vite + Pinia + Vue Router + Axios.
+## Jalankan
 
-## Menjalankan aplikasi
+Terminal 1 — mock API JSON Server:
 
 ```bash
 npm install
+npm run mock-api
+```
+
+Terminal 2 — frontend:
+
+```bash
 npm run dev
 ```
 
-Buka `http://localhost:5173`.
+Buka `http://localhost:5173/login`.
 
-## Validasi production
+## Demo login
 
-```bash
-npm run typecheck
-npm run build
-npm run preview
-```
+- Email: `admin@example.com`
+- Password: `password`
 
-Aplikasi tetap dapat dijalankan tanpa backend karena dashboard menggunakan `Demo mode` jika endpoint `VITE_API_BASE_URL/health` belum tersedia.
+## Endpoint CRUD
 
-## Struktur utama
+JSON Server membaca `db.json` dan menyediakan:
 
-- `src/components`: komponen UI reusable.
-- `src/composables`: reusable logic seperti async state, toggle, dan pagination.
-- `src/services`: integrasi API Axios global.
-- `src/stores`: state global Pinia.
-- `src/views`: halaman yang didaftarkan di router.
-- `src/router`: konfigurasi navigasi.
+- `GET /users`
+- `POST /users`
+- `PUT /users/:id`
+- `DELETE /users/:id`
+
+Login pada boilerplate ini bersifat demo/local karena JSON Server tidak menyediakan autentikasi JWT. Untuk production, ganti `auth.login()` dengan endpoint backend sungguhan dan validasi token di server.
