@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Card from '@/components/ui/Card.vue';
 import Button from '@/components/ui/Button.vue';
+import Card from '@/components/ui/Card.vue';
 
 const settings = ref([
-  { label: 'Multi-factor authentication', enabled: true },
-  { label: 'Audit logging', enabled: true },
-  { label: 'Auto scaling', enabled: false },
-  { label: 'Proactive alerts', enabled: true },
+  { label: 'Multi-factor authentication', description: 'Add an extra layer of security', enabled: true },
+  { label: 'Audit logging', description: 'Track all system activities', enabled: true },
+  { label: 'Auto scaling', description: 'Automatically scale resources', enabled: false },
+  { label: 'Proactive alerts', description: 'Get notified of issues before they become problems', enabled: true },
 ]);
 
 function toggleSetting(index: number) {
@@ -17,26 +17,37 @@ function toggleSetting(index: number) {
 
 <template>
   <div class="space-y-6">
+    <!-- Page Header -->
     <div>
       <p class="text-sm text-slate-400">Configuration</p>
-      <h1 class="text-3xl font-bold tracking-tight">Application settings</h1>
+      <h1 class="text-3xl font-bold tracking-tight">Application Settings</h1>
     </div>
 
-    <Card class="p-4 md:p-6">
-      <div class="space-y-3">
-        <div v-for="(setting, index) in settings" :key="setting.label" class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+    <!-- Security Settings -->
+    <Card class="p-6">
+      <h2 class="mb-6 text-lg font-semibold">Security & Features</h2>
+      <div class="space-y-4">
+        <div v-for="(setting, index) in settings" :key="setting.label" class="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/40 p-4 hover:bg-slate-950/60 transition-colors">
           <div>
-            <div class="font-medium">{{ setting.label }}</div>
+            <h3 class="font-medium">{{ setting.label }}</h3>
+            <p class="mt-1 text-sm text-slate-400">{{ setting.description }}</p>
           </div>
           <Button
             :variant="setting.enabled ? 'default' : 'secondary'"
             size="sm"
             @click="toggleSetting(index)"
           >
-            {{ setting.enabled ? 'On' : 'Off' }}
+            {{ setting.enabled ? 'Enabled' : 'Disabled' }}
           </Button>
         </div>
       </div>
+    </Card>
+
+    <!-- Danger Zone -->
+    <Card class="border-red-500/30 bg-red-500/5 p-6">
+      <h2 class="mb-4 text-lg font-semibold text-red-300">Danger Zone</h2>
+      <p class="text-sm text-slate-300 mb-4">These actions are irreversible. Please proceed with caution.</p>
+      <Button variant="destructive">Delete All Data</Button>
     </Card>
   </div>
 </template>
