@@ -1,45 +1,49 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import Button from '@/components/ui/Button.vue';
 import { ChevronDown } from 'lucide-vue-next';
+import { menuService, type MenuNode } from '@/services/menu';
 
 const auth = useAuthStore();
 const router = useRouter();
 const expandedMenus = ref<string[]>([]);
+const menuItems = ref<MenuNode[]>([]);
 
-type MenuItem = {
-  id: string;
-  label: string;
-  icon?: string;
-  route?: string;
-  children?: MenuItem[];
-};
-
-const menuItems: MenuItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: '📊', route: '/' },
-  {
-    id: 'admin',
-    label: 'Administration',
-    icon: '⚙️',
-    children: [
-      { id: 'users', label: 'User Management', route: '/admin/users' },
-      { id: 'roles', label: 'Roles & Permissions', route: '/admin/roles' },
-      { id: 'audit', label: 'Audit Logs', route: '/admin/audit' },
-    ],
-  },
-  {
-    id: 'features',
-    label: 'Features',
-    icon: '✨',
-    children: [
-      { id: 'reports', label: 'Reports', route: '/features/reports' },
-      { id: 'analytics', label: 'Analytics', route: '/features/analytics' },
-    ],
-  },
-  { id: 'settings', label: 'Settings', icon: '⚡', route: '/settings' },
-];
+async function loadMenu() {
+  try {
+    const items = await menuService.list();
+    menuItems.value = items;
+    const defaultExpanded = items.filter((item) => item.children && item.children.length > 0).map((item) => item.id);
+    expandedMenus.value = defaultExpanded;
+  } catch {
+    menuItems.value = [
+      { id: 'dashboard', label: 'Dashboard', icon: '📊', route: '/' },
+      {
+        id: 'administration',
+        label: 'Administration',
+        icon: '⚙️',
+        children: [
+          { id: 'users', label: 'User Management', route: '/admin/users' },
+          { id: 'roles', label: 'Roles & Permissions', route: '/admin/roles' },
+          { id: 'audit', label: 'Audit Logs', route: '/admin/audit' },
+        ],
+      },
+      {
+        id: 'features',
+        label: 'Features',
+        icon: '✨',
+        children: [
+          { id: 'reports', label: 'Reports', route: '/features/reports' },
+          { id: 'analytics', label: 'Analytics', route: '/features/analytics' },
+        ],
+      },
+      { id: 'settings', label: 'Settings', icon: '⚡', route: '/settings' },
+    ];
+    expandedMenus.value = ['administration', 'features'];
+  }
+}
 
 function toggleMenu(id: string) {
   const index = expandedMenus.value.indexOf(id);
@@ -58,13 +62,15 @@ async function logout() {
   auth.logout();
   await router.push({ name: 'login' });
 }
+
+onMounted(() => {
+  void loadMenu();
+});
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col md:flex-row bg-slate-950 text-slate-100">
-    <!-- Sidebar -->
     <aside class="w-full md:w-64 border-b md:border-b-0 md:border-r border-slate-800 bg-slate-900/90">
-      <!-- Logo Section -->
       <div class="flex items-center gap-3 border-b border-slate-800 p-4">
         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 font-bold text-white">EV</div>
         <div>
@@ -73,10 +79,8 @@ async function logout() {
         </div>
       </div>
 
-      <!-- Navigation Menu -->
       <nav class="flex-1 space-y-1 p-4" aria-label="Main navigation">
         <template v-for="item in menuItems" :key="item.id">
-          <!-- Menu Item with Children -->
           <div v-if="item.children && item.children.length > 0">
             <button
               :aria-expanded="isMenuExpanded(item.id)"
@@ -94,11 +98,7 @@ async function logout() {
                 ]"
               />
             </button>
-            <!-- Submenu Items -->
-            <div
-              v-if="isMenuExpanded(item.id)"
-              class="ml-6 space-y-1 border-l border-slate-700 pl-3 mt-1"
-            >
+            <div v-if="isMenuExpanded(item.id)" class="ml-6 mt-1 space-y-1 border-l border-slate-700 pl-3">
               <RouterLink
                 v-for="child in item.children"
                 :key="child.id"
@@ -111,7 +111,6 @@ async function logout() {
             </div>
           </div>
 
-          <!-- Menu Item without Children -->
           <RouterLink
             v-else
             :to="item.route || '#'"
@@ -124,7 +123,6 @@ async function logout() {
         </template>
       </nav>
 
-      <!-- User Profile & Logout -->
       <div class="border-t border-slate-800 p-4">
         <div class="rounded-lg bg-slate-950/60 border border-slate-800 p-3 mb-3">
           <p class="text-sm font-medium truncate">{{ auth.user?.name }}</p>
@@ -134,9 +132,7 @@ async function logout() {
       </div>
     </aside>
 
-    <!-- Main Content -->
     <div class="flex-1 flex flex-col">
-      <!-- Header -->
       <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-40 px-6 py-4">
         <div class="flex items-center justify-between">
           <h1 class="text-xl font-semibold">Enterprise Dashboard</h1>
@@ -146,7 +142,6 @@ async function logout() {
         </div>
       </header>
 
-      <!-- Page Content -->
       <main class="flex-1 p-6 overflow-y-auto">
         <slot />
       </main>
