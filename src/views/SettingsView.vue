@@ -1,40 +1,42 @@
 <script setup lang="ts">
-import BaseCard from '@/components/ui/BaseCard.vue';
-import { useToggle } from '@/composables/useToggle';
+import { ref } from 'vue';
+import Card from '@/components/ui/Card.vue';
+import Button from '@/components/ui/Button.vue';
 
-const mfa = useToggle(true);
-const auditLogging = useToggle(true);
-const autoScaling = useToggle(false);
-const proactiveAlerts = useToggle(true);
+const settings = ref([
+  { label: 'Multi-factor authentication', enabled: true },
+  { label: 'Audit logging', enabled: true },
+  { label: 'Auto scaling', enabled: false },
+  { label: 'Proactive alerts', enabled: true },
+]);
 
-const settings = [
-  { label: 'Multi-factor authentication', state: mfa },
-  { label: 'Audit logging', state: auditLogging },
-  { label: 'Auto scaling', state: autoScaling },
-  { label: 'Proactive alerts', state: proactiveAlerts },
-];
+function toggleSetting(index: number) {
+  settings.value[index].enabled = !settings.value[index].enabled;
+}
 </script>
 
 <template>
-  <div class="page">
-    <header class="page-header">
-      <div>
-        <p class="muted">Configuration</p>
-        <h1>Application settings</h1>
-      </div>
-    </header>
+  <div class="space-y-6">
+    <div>
+      <p class="text-sm text-slate-400">Configuration</p>
+      <h1 class="text-3xl font-bold tracking-tight">Application settings</h1>
+    </div>
 
-    <BaseCard title="Enterprise controls" subtitle="Kelola fitur keamanan dan operasional aplikasi.">
-      <div class="settings-list">
-        <div v-for="setting in settings" :key="setting.label" class="switch-row">
-          <strong>{{ setting.label }}</strong>
-          <button
-            :class="['switch', { active: setting.state.value }]"
-            :aria-label="`Toggle ${setting.label}`"
-            @click="setting.state.toggle"
-          />
+    <Card class="p-4 md:p-6">
+      <div class="space-y-3">
+        <div v-for="(setting, index) in settings" :key="setting.label" class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+          <div>
+            <div class="font-medium">{{ setting.label }}</div>
+          </div>
+          <Button
+            :variant="setting.enabled ? 'default' : 'secondary'"
+            size="sm"
+            @click="toggleSetting(index)"
+          >
+            {{ setting.enabled ? 'On' : 'Off' }}
+          </Button>
         </div>
       </div>
-    </BaseCard>
+    </Card>
   </div>
 </template>

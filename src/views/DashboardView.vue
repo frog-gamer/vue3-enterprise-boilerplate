@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import AppError from '@/components/ui/AppError.vue';
-import AppLoading from '@/components/ui/AppLoading.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-import BaseCard from '@/components/ui/BaseCard.vue';
-import MetricCard from '@/components/dashboard/MetricCard.vue';
 import { useAppStore } from '@/stores/app';
 import { useAsync } from '@/composables/useAsync';
+import Card from '@/components/ui/Card.vue';
+import Button from '@/components/ui/Button.vue';
 
 const store = useAppStore();
-const { error, errorMessage, isLoading, execute } = useAsync(() => store.fetchStatus());
+const { isLoading, error, errorMessage, execute } = useAsync(() => store.fetchStatus());
 
 onMounted(() => {
   void execute();
@@ -17,29 +14,38 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="page">
-    <header class="page-header">
+  <div class="space-y-6">
+    <div class="flex items-center justify-between gap-3">
       <div>
-        <p class="muted">Overview</p>
-        <h1>{{ store.appName }}</h1>
+        <p class="text-sm text-slate-400">Overview</p>
+        <h1 class="text-3xl font-bold tracking-tight">{{ store.appName }}</h1>
       </div>
-      <div class="header-actions">
-        <span class="pill">{{ store.status }}</span>
-        <BaseButton>Export report</BaseButton>
+      <div class="flex items-center gap-3">
+        <span class="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
+          {{ store.status }}
+        </span>
+        <Button>Export Report</Button>
       </div>
-    </header>
+    </div>
 
-    <AppLoading v-if="isLoading" label="Memuat status aplikasi..." />
-    <AppError v-else-if="error" title="Gagal memuat status" :message="errorMessage" @retry="execute" />
+    <div v-if="isLoading" class="rounded-xl border border-slate-800 bg-slate-900/80 p-4 text-slate-300">Loading dashboard...</div>
+    <div v-else-if="error" class="rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-red-300">{{ errorMessage }}</div>
 
-    <section v-else class="grid">
-      <MetricCard v-for="metric in store.metrics" :key="metric.label" v-bind="metric" />
-    </section>
+    <div v-else class="grid gap-4 md:grid-cols-3">
+      <Card v-for="metric in store.metrics" :key="metric.label" class="p-5">
+        <p class="text-sm text-slate-400">{{ metric.label }}</p>
+        <div class="mt-3 text-3xl font-bold">{{ metric.value }}</div>
+        <div class="mt-2 text-xs" :class="metric.tone === 'success' ? 'text-emerald-300' : 'text-slate-300'">
+          {{ metric.trend }}
+        </div>
+      </Card>
+    </div>
 
-    <BaseCard title="Account Summary" style="margin-top: 1.5rem">
-      <p>
+    <Card class="p-5">
+      <h2 class="mb-2 text-xl font-semibold">Account Summary</h2>
+      <p class="text-slate-300">
         {{ store.user.name }} • {{ store.user.role }} • {{ store.user.department }}
       </p>
-    </BaseCard>
+    </Card>
   </div>
 </template>
