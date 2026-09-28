@@ -5,28 +5,213 @@
       "name": "Alicia Thompson",
       "email": "alicia@company.com",
       "role": "Admin",
-      "status": "Active"
+      "status": "Active",
+      "department": "Operations",
+      "phone": "+62 812-3456-7890",
+      "joinDate": "2023-01-15"
     },
     {
       "id": "2",
       "name": "Ben Carter",
       "email": "ben@company.com",
       "role": "Manager",
-      "status": "Pending"
+      "status": "Pending",
+      "department": "Engineering",
+      "phone": "+62 812-3456-7891",
+      "joinDate": "2023-06-20"
     },
     {
       "id": "3",
       "name": "Chloe Lee",
       "email": "chloe@company.com",
       "role": "Developer",
-      "status": "Active"
+      "status": "Active",
+      "department": "Engineering",
+      "phone": "+62 812-3456-7892",
+      "joinDate": "2023-03-10"
     },
     {
       "id": "4",
       "name": "Daniel Ross",
       "email": "daniel@company.com",
       "role": "QA",
-      "status": "Inactive"
+      "status": "Inactive",
+      "department": "Quality Assurance",
+      "phone": "+62 812-3456-7893",
+      "joinDate": "2022-11-05"
+    },
+    {
+      "id": "5",
+      "name": "Emma Davis",
+      "email": "emma@company.com",
+      "role": "Developer",
+      "status": "Active",
+      "department": "Engineering",
+      "phone": "+62 812-3456-7894",
+      "joinDate": "2023-04-18"
+    }
+  ],
+  "roles": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "description": "Full access to all system features",
+      "permissions": ["create", "read", "update", "delete", "manage_users", "manage_roles"],
+      "userCount": 1
+    },
+    {
+      "id": "2",
+      "name": "Manager",
+      "description": "Can manage team members and view reports",
+      "permissions": ["read", "update", "manage_team"],
+      "userCount": 1
+    },
+    {
+      "id": "3",
+      "name": "Developer",
+      "description": "Can create and update content",
+      "permissions": ["create", "read", "update"],
+      "userCount": 2
+    },
+    {
+      "id": "4",
+      "name": "QA",
+      "description": "Can test and report issues",
+      "permissions": ["read", "report_issues"],
+      "userCount": 1
+    },
+    {
+      "id": "5",
+      "name": "User",
+      "description": "Basic user access",
+      "permissions": ["read"],
+      "userCount": 0
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "1",
+      "user": "Alicia Thompson",
+      "action": "User Created",
+      "resource": "User",
+      "resourceId": "5",
+      "details": "Created new user Emma Davis",
+      "timestamp": "2024-09-28T10:30:00Z",
+      "status": "success"
+    },
+    {
+      "id": "2",
+      "user": "Alicia Thompson",
+      "action": "User Updated",
+      "resource": "User",
+      "resourceId": "2",
+      "details": "Updated role from Developer to Manager",
+      "timestamp": "2024-09-28T09:15:00Z",
+      "status": "success"
+    },
+    {
+      "id": "3",
+      "user": "Ben Carter",
+      "action": "Report Generated",
+      "resource": "Report",
+      "resourceId": "101",
+      "details": "Generated monthly sales report",
+      "timestamp": "2024-09-28T08:00:00Z",
+      "status": "success"
+    },
+    {
+      "id": "4",
+      "user": "Chloe Lee",
+      "action": "Failed Login",
+      "resource": "Auth",
+      "resourceId": "",
+      "details": "Failed login attempt from IP 192.168.1.100",
+      "timestamp": "2024-09-27T15:45:00Z",
+      "status": "failure"
+    },
+    {
+      "id": "5",
+      "user": "Alicia Thompson",
+      "action": "Settings Changed",
+      "resource": "Settings",
+      "resourceId": "system",
+      "details": "Enabled multi-factor authentication",
+      "timestamp": "2024-09-27T14:20:00Z",
+      "status": "success"
+    }
+  ],
+  "reports": [
+    {
+      "id": "1",
+      "title": "Monthly Sales Report",
+      "description": "Sales performance for September 2024",
+      "author": "Alicia Thompson",
+      "createdAt": "2024-09-28T10:00:00Z",
+      "type": "sales",
+      "status": "completed",
+      "downloadUrl": "/reports/sales-sept-2024.pdf"
+    },
+    {
+      "id": "2",
+      "title": "User Activity Report",
+      "description": "System user activity logs for Q3 2024",
+      "author": "Ben Carter",
+      "createdAt": "2024-09-25T14:30:00Z",
+      "type": "activity",
+      "status": "completed",
+      "downloadUrl": "/reports/activity-q3-2024.pdf"
+    },
+    {
+      "id": "3",
+      "title": "Security Audit Report",
+      "description": "System security assessment and findings",
+      "author": "Chloe Lee",
+      "createdAt": "2024-09-20T11:00:00Z",
+      "type": "security",
+      "status": "completed",
+      "downloadUrl": "/reports/security-audit-2024.pdf"
+    }
+  ],
+  "analytics": [
+    {
+      "id": "1",
+      "date": "2024-09-28",
+      "activeUsers": 245,
+      "newUsers": 12,
+      "sessionDuration": "24.5",
+      "bounceRate": "3.2"
+    },
+    {
+      "id": "2",
+      "date": "2024-09-27",
+      "activeUsers": 238,
+      "newUsers": 8,
+      "sessionDuration": "23.8",
+      "bounceRate": "3.5"
+    },
+    {
+      "id": "3",
+      "date": "2024-09-26",
+      "activeUsers": 242,
+      "newUsers": 15,
+      "sessionDuration": "25.1",
+      "bounceRate": "2.9"
+    },
+    {
+      "id": "4",
+      "date": "2024-09-25",
+      "activeUsers": 235,
+      "newUsers": 10,
+      "sessionDuration": "24.0",
+      "bounceRate": "3.8"
+    },
+    {
+      "id": "5",
+      "date": "2024-09-24",
+      "activeUsers": 248,
+      "newUsers": 18,
+      "sessionDuration": "25.3",
+      "bounceRate": "3.1"
     }
   ]
 }

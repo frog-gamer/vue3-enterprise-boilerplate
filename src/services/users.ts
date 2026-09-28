@@ -8,6 +8,9 @@ export type User = {
   email: string;
   role: string;
   status: UserStatus;
+  department?: string;
+  phone?: string;
+  joinDate?: string;
 };
 
 export type UserPayload = Omit<User, 'id'>;
