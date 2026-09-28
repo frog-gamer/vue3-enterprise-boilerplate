@@ -2,13 +2,21 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import LoginView from '@/views/LoginView.vue';
 import DashboardView from '@/views/DashboardView.vue';
-import AdminUsersView from '@/views/AdminUsersView.vue';
+import SettingsView from '@/views/SettingsView.vue';
+import DashboardLayout from '@/layouts/DashboardLayout.vue';
+
+// User Management
+import UserListView from '@/views/users/UserListView.vue';
+import UserDetailView from '@/views/users/UserDetailView.vue';
+import UserCreateView from '@/views/users/UserCreateView.vue';
+
+// Admin Pages
 import AdminRolesView from '@/views/AdminRolesView.vue';
 import AdminAuditView from '@/views/AdminAuditView.vue';
-import SettingsView from '@/views/SettingsView.vue';
+
+// Features Pages
 import FeaturesReportsView from '@/views/FeaturesReportsView.vue';
 import FeaturesAnalyticsView from '@/views/FeaturesAnalyticsView.vue';
-import ProtectedLayout from '@/layouts/ProtectedLayout.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,7 +29,7 @@ const router = createRouter({
     },
     {
       path: '/',
-      component: ProtectedLayout,
+      component: DashboardLayout,
       meta: { requiresAuth: true },
       children: [
         {
@@ -29,11 +37,23 @@ const router = createRouter({
           name: 'dashboard',
           component: DashboardView,
         },
+        // User Management Routes
         {
-          path: 'admin/users',
-          name: 'admin-users',
-          component: AdminUsersView,
+          path: 'users',
+          name: 'user-list',
+          component: UserListView,
         },
+        {
+          path: 'users/create',
+          name: 'user-create',
+          component: UserCreateView,
+        },
+        {
+          path: 'users/:id',
+          name: 'user-detail',
+          component: UserDetailView,
+        },
+        // Admin Routes
         {
           path: 'admin/roles',
           name: 'admin-roles',
@@ -44,6 +64,7 @@ const router = createRouter({
           name: 'admin-audit',
           component: AdminAuditView,
         },
+        // Features Routes
         {
           path: 'features/reports',
           name: 'features-reports',
@@ -54,6 +75,7 @@ const router = createRouter({
           name: 'features-analytics',
           component: FeaturesAnalyticsView,
         },
+        // Settings
         {
           path: 'settings',
           name: 'settings',
