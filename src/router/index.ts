@@ -10,14 +10,6 @@ import UserListView from '@/views/users/UserListView.vue';
 import UserDetailView from '@/views/users/UserDetailView.vue';
 import UserCreateView from '@/views/users/UserCreateView.vue';
 
-// Admin Pages
-import AdminRolesView from '@/views/AdminRolesView.vue';
-import AdminAuditView from '@/views/AdminAuditView.vue';
-
-// Features Pages
-import FeaturesReportsView from '@/views/FeaturesReportsView.vue';
-import FeaturesAnalyticsView from '@/views/FeaturesAnalyticsView.vue';
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -52,28 +44,6 @@ const router = createRouter({
           path: 'users/:id',
           name: 'user-detail',
           component: UserDetailView,
-        },
-        // Admin Routes
-        {
-          path: 'admin/roles',
-          name: 'admin-roles',
-          component: AdminRolesView,
-        },
-        {
-          path: 'admin/audit',
-          name: 'admin-audit',
-          component: AdminAuditView,
-        },
-        // Features Routes
-        {
-          path: 'features/reports',
-          name: 'features-reports',
-          component: FeaturesReportsView,
-        },
-        {
-          path: 'features/analytics',
-          name: 'features-analytics',
-          component: FeaturesAnalyticsView,
         },
         // Settings
         {
